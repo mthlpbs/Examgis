@@ -250,7 +250,7 @@ body{
     .col-1{
         display: none;
     }
-    col-2{
+    .col-2{
         width: 100%;
     }
 }
