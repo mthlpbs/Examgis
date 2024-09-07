@@ -6,6 +6,8 @@ if(isset($_COOKIE['user_id'])){
    $user_id = $_COOKIE['user_id'];
 }else{
    $user_id = '';
+   header('Location: login.php');
+   exit();
 }
 
 ?>
@@ -13,10 +15,17 @@ if(isset($_COOKIE['user_id'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- meta properties -->
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>courses</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Papers - ExamGIS</title>
+
+   <!-- Fav-icon -->
+   <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+   <link rel="manifest" href="./images/site.webmanifest">
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -33,12 +42,12 @@ if(isset($_COOKIE['user_id'])){
 
 <section class="courses">
 
-   <h1 class="heading">all Categorys</h1>
+   <h1 class="heading">Courses</h1>
 
    <div class="box-container">
 
       <?php
-         $select_courses = $conn->prepare("SELECT * FROM `playlist` WHERE status = ? ORDER BY date DESC");
+         $select_courses = $conn->prepare("SELECT * FROM `course` WHERE status = ? ORDER BY date DESC");
          $select_courses->execute(['active']);
          if($select_courses->rowCount() > 0){
             while($fetch_course = $select_courses->fetch(PDO::FETCH_ASSOC)){
@@ -50,20 +59,20 @@ if(isset($_COOKIE['user_id'])){
       ?>
       <div class="box">
          <div class="tutor">
-            <img src="uploaded_files/<?= $fetch_tutor['image']; ?>" alt="">
+            <img src="uploaded_files/tutor_thumb/<?= $fetch_tutor['image']; ?>" alt="">
             <div>
                <h3><?= $fetch_tutor['name']; ?></h3>
                <span><?= $fetch_course['date']; ?></span>
             </div>
          </div>
-         <img src="uploaded_files/<?= $fetch_course['thumb']; ?>" class="thumb" alt="">
+         <img src="uploaded_files/course_thumb/<?= $fetch_course['thumb']; ?>" class="thumb" alt="">
          <h3 class="title"><?= $fetch_course['title']; ?></h3>
-         <a href="playlist.php?get_id=<?= $course_id; ?>" class="inline-btn">view Category</a>
+         <a href="course_desc.php?get_id=<?= $course_id; ?>" class="inline-btn">view course</a>
       </div>
       <?php
          }
       }else{
-         echo '<p class="empty">no courses added yet!</p>';
+         echo '<p class="empty">No courses are added yet!</p>';
       }
       ?>
 
@@ -74,18 +83,8 @@ if(isset($_COOKIE['user_id'])){
 <!-- courses section ends -->
 
 
-
-
-
-
-
-
-
-
-<?php include 'components/footer.php'; ?>
-
 <!-- custom js file link  -->
 <script src="js/script.js"></script>
-   
+    
 </body>
 </html>

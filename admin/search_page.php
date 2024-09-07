@@ -9,55 +9,53 @@ if(isset($_COOKIE['tutor_id'])){
    header('location:login.php');
 }
 
-if(isset($_POST['delete_video'])){
-   $delete_id = $_POST['video_id'];
+if(isset($_POST['delete_pdf'])){
+   $delete_id = $_POST['pdf_id'];
    $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING);
-   $verify_video = $conn->prepare("SELECT * FROM `content` WHERE id = ? LIMIT 1");
-   $verify_video->execute([$delete_id]);
-   if($verify_video->rowCount() > 0){
-      $delete_video_thumb = $conn->prepare("SELECT * FROM `content` WHERE id = ? LIMIT 1");
-      $delete_video_thumb->execute([$delete_id]);
-      $fetch_thumb = $delete_video_thumb->fetch(PDO::FETCH_ASSOC);
-      unlink('../uploaded_files/'.$fetch_thumb['thumb']);
-      $delete_video = $conn->prepare("SELECT * FROM `content` WHERE id = ? LIMIT 1");
-      $delete_video->execute([$delete_id]);
-      $fetch_video = $delete_video->fetch(PDO::FETCH_ASSOC);
-      unlink('../uploaded_files/'.$fetch_video['video']);
-      $delete_likes = $conn->prepare("DELETE FROM `likes` WHERE content_id = ?");
+   $verify_pdf = $conn->prepare("SELECT * FROM `paper` WHERE id = ? LIMIT 1");
+   $verify_pdf->execute([$delete_id]);
+   if($verify_pdf->rowCount() > 0){
+      $delete_pdf_thumb = $conn->prepare("SELECT * FROM `paper` WHERE id = ? LIMIT 1");
+      $delete_pdf_thumb->execute([$delete_id]);
+      $fetch_thumb = $delete_pdf_thumb->fetch(PDO::FETCH_ASSOC);
+      unlink('../uploaded_files/paper_thumb/'.$fetch_thumb['thumb']);
+      $delete_pdf = $conn->prepare("SELECT * FROM `paper` WHERE id = ? LIMIT 1");
+      $delete_pdf->execute([$delete_id]);
+      $fetch_pdf = $delete_pdf->fetch(PDO::FETCH_ASSOC);
+      unlink('../uploaded_files/paper_thumb/'.$fetch_pdf['pdf']);
+      $delete_likes = $conn->prepare("DELETE FROM `likes` WHERE paper_id = ?");
       $delete_likes->execute([$delete_id]);
-      $delete_comments = $conn->prepare("DELETE FROM `comments` WHERE content_id = ?");
+      $delete_comments = $conn->prepare("DELETE FROM `comments` WHERE paper_id = ?");
       $delete_comments->execute([$delete_id]);
-      $delete_content = $conn->prepare("DELETE FROM `content` WHERE id = ?");
-      $delete_content->execute([$delete_id]);
-      $message[] = 'video deleted!';
+      $delete_paper = $conn->prepare("DELETE FROM `paper` WHERE id = ?");
+      $delete_paper->execute([$delete_id]);
+      $message[] = 'The paper is deleted!';
    }else{
-      $message[] = 'video already deleted!';
+      $message[] = 'The paper is already deleted!';
    }
 
 }
 
-if(isset($_POST['delete_playlist'])){
-   $delete_id = $_POST['playlist_id'];
+if(isset($_POST['delete_course'])){
+   $delete_id = $_POST['course_id'];
    $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING);
 
-   $verify_playlist = $conn->prepare("SELECT * FROM `playlist` WHERE id = ? AND tutor_id = ? LIMIT 1");
-   $verify_playlist->execute([$delete_id, $tutor_id]);
+   $verify_course = $conn->prepare("SELECT * FROM `course` WHERE id = ? AND tutor_id = ? LIMIT 1");
+   $verify_course->execute([$delete_id, $tutor_id]);
 
-   if($verify_playlist->rowCount() > 0){
+   if($verify_course->rowCount() > 0){
 
-   
-
-   $delete_playlist_thumb = $conn->prepare("SELECT * FROM `playlist` WHERE id = ? LIMIT 1");
-   $delete_playlist_thumb->execute([$delete_id]);
-   $fetch_thumb = $delete_playlist_thumb->fetch(PDO::FETCH_ASSOC);
-   unlink('../uploaded_files/'.$fetch_thumb['thumb']);
-   $delete_bookmark = $conn->prepare("DELETE FROM `bookmark` WHERE playlist_id = ?");
+   $delete_course_thumb = $conn->prepare("SELECT * FROM `course` WHERE id = ? LIMIT 1");
+   $delete_course_thumb->execute([$delete_id]);
+   $fetch_thumb = $delete_course_thumb->fetch(PDO::FETCH_ASSOC);
+   unlink('../uploaded_files/course_thumb/'.$fetch_thumb['thumb']);
+   $delete_bookmark = $conn->prepare("DELETE FROM `bookmark` WHERE course_id = ?");
    $delete_bookmark->execute([$delete_id]);
-   $delete_playlist = $conn->prepare("DELETE FROM `playlist` WHERE id = ?");
-   $delete_playlist->execute([$delete_id]);
-   $message[] = 'playlist deleted!';
+   $delete_course = $conn->prepare("DELETE FROM `course` WHERE id = ?");
+   $delete_course->execute([$delete_id]);
+   $message[] = 'The course is deleted!';
    }else{
-      $message[] = 'playlist already deleted!';
+      $message[] = 'The course is already deleted!';
    }
 }
 
@@ -81,40 +79,37 @@ if(isset($_POST['delete_playlist'])){
 <body>
 
 <?php include '../components/admin_header.php'; ?>
-   
 <section class="contents">
-
-   <h1 class="heading">contents</h1>
-
+   <h1 class="heading">papers</h1>
    <div class="box-container">
 
    <?php
       if(isset($_POST['search']) or isset($_POST['search_btn'])){
       $search = $_POST['search'];
-      $select_videos = $conn->prepare("SELECT * FROM `content` WHERE title LIKE '%{$search}%' AND tutor_id = ? ORDER BY date DESC");
-      $select_videos->execute([$tutor_id]);
-      if($select_videos->rowCount() > 0){
-         while($fecth_videos = $select_videos->fetch(PDO::FETCH_ASSOC)){ 
-            $video_id = $fecth_videos['id'];
+      $select_pdfs = $conn->prepare("SELECT * FROM `paper` WHERE title LIKE '%{$search}%' AND tutor_id = ? ORDER BY date DESC");
+      $select_pdfs->execute([$tutor_id]);
+      if($select_pdfs->rowCount() > 0){
+         while($fecth_pdfs = $select_pdfs->fetch(PDO::FETCH_ASSOC)){ 
+            $pdf_id = $fecth_pdfs['id'];
    ?>
       <div class="box">
          <div class="flex">
-            <div><i class="fas fa-dot-circle" style="<?php if($fecth_videos['status'] == 'active'){echo 'color:limegreen'; }else{echo 'color:red';} ?>"></i><span style="<?php if($fecth_videos['status'] == 'active'){echo 'color:limegreen'; }else{echo 'color:red';} ?>"><?= $fecth_videos['status']; ?></span></div>
-            <div><i class="fas fa-calendar"></i><span><?= $fecth_videos['date']; ?></span></div>
+            <div><i class="fas fa-dot-circle" style="<?php if($fecth_pdfs['status'] == 'active'){echo 'color:limegreen'; }else{echo 'color:red';} ?>"></i><span style="<?php if($fecth_pdfs['status'] == 'active'){echo 'color:limegreen'; }else{echo 'color:red';} ?>"><?= $fecth_pdfs['status']; ?></span></div>
+            <div><i class="fas fa-calendar"></i><span><?= $fecth_pdfs['date']; ?></span></div>
          </div>
-         <img src="../uploaded_files/<?= $fecth_videos['thumb']; ?>" class="thumb" alt="">
-         <h3 class="title"><?= $fecth_videos['title']; ?></h3>
+         <img src="../uploaded_files/paper_thumb/<?= $fecth_pdf['thumb']; ?>" class="thumb" alt="">
+         <h3 class="title"><?= $fecth_pdfs['title']; ?></h3>
          <form action="" method="post" class="flex-btn">
-            <input type="hidden" name="video_id" value="<?= $video_id; ?>">
-            <a href="update_content.php?get_id=<?= $video_id; ?>" class="option-btn">update</a>
-            <input type="submit" value="delete" class="delete-btn" onclick="return confirm('delete this video?');" name="delete_video">
+            <input type="hidden" name="pdf_id" value="<?= $pdf_id; ?>">
+            <a href="update_paper.php?get_id=<?= $pdf_id; ?>" class="option-btn">update</a>
+            <input type="submit" value="delete" class="delete-btn" onclick="return confirm('Delete this paper?');" name="delete_pdf">
          </form>
-         <a href="view_content.php?get_id=<?= $video_id; ?>" class="btn">view paper</a>
+         <a href="view_paper.php?get_id=<?= $pdf_id; ?>" class="btn">view paper</a>
       </div>
    <?php
          }
       }else{
-         echo '<p class="empty">no contents founds!</p>';
+         echo '<p class="empty">no papers founds!</p>';
       }
    }else{
       echo '<p class="empty">please search something!</p>';
@@ -125,75 +120,55 @@ if(isset($_POST['delete_playlist'])){
 
 </section>
 
-<section class="playlists">
-
-   <h1 class="heading">Categorys</h1>
-
+<section class="courses">
+   <h1 class="heading">Courses</h1>
    <div class="box-container">
    
       <?php
       if(isset($_POST['search']) or isset($_POST['search_btn'])){
          $search = $_POST['search'];
-         $select_playlist = $conn->prepare("SELECT * FROM `playlist` WHERE title LIKE '%{$search}%' AND tutor_id = ? ORDER BY date DESC");
-         $select_playlist->execute([$tutor_id]);
-         if($select_playlist->rowCount() > 0){
-         while($fetch_playlist = $select_playlist->fetch(PDO::FETCH_ASSOC)){
-            $playlist_id = $fetch_playlist['id'];
-            $count_videos = $conn->prepare("SELECT * FROM `content` WHERE playlist_id = ?");
-            $count_videos->execute([$playlist_id]);
-            $total_videos = $count_videos->rowCount();
+         $select_course = $conn->prepare("SELECT * FROM `course` WHERE title LIKE '%{$search}%' AND tutor_id = ? ORDER BY date DESC");
+         $select_course->execute([$tutor_id]);
+         if($select_course->rowCount() > 0){
+         while($fetch_course = $select_course->fetch(PDO::FETCH_ASSOC)){
+            $course_id = $fetch_course['id'];
+            $count_pdfs = $conn->prepare("SELECT * FROM `paper` WHERE course_id = ?");
+            $count_pdfs->execute([$course_id]);
+            $total_pdfs = $count_pdfs->rowCount();
       ?>
       <div class="box">
          <div class="flex">
-            <div><i class="fas fa-circle-dot" style="<?php if($fetch_playlist['status'] == 'active'){echo 'color:limegreen'; }else{echo 'color:red';} ?>"></i><span style="<?php if($fetch_playlist['status'] == 'active'){echo 'color:limegreen'; }else{echo 'color:red';} ?>"><?= $fetch_playlist['status']; ?></span></div>
-            <div><i class="fas fa-calendar"></i><span><?= $fetch_playlist['date']; ?></span></div>
+            <div><i class="fas fa-circle-dot" style="<?php if($fetch_course['status'] == 'active'){echo 'color:limegreen'; }else{echo 'color:red';} ?>"></i><span style="<?php if($fetch_course['status'] == 'active'){echo 'color:limegreen'; }else{echo 'color:red';} ?>"><?= $fetch_course['status']; ?></span></div>
+            <div><i class="fas fa-calendar"></i><span><?= $fetch_course['date']; ?></span></div>
          </div>
          <div class="thumb">
-            <span><?= $total_videos; ?></span>
-            <img src="../uploaded_files/<?= $fetch_playlist['thumb']; ?>" alt="">
+            <span><?= $total_pdfs; ?></span>
+            <img src="../uploaded_files/course_thumb/<?= $fetch_course['thumb']; ?>" alt="">
          </div>
-         <h3 class="title"><?= $fetch_playlist['title']; ?></h3>
-         <p class="description"><?= $fetch_playlist['description']; ?></p>
+         <h3 class="title"><?= $fetch_course['title']; ?></h3>
+         <p class="description"><?= $fetch_course['description']; ?></p>
          <form action="" method="post" class="flex-btn">
-            <input type="hidden" name="playlist_id" value="<?= $playlist_id; ?>">
-            <a href="update_playlist.php?get_id=<?= $playlist_id; ?>" class="option-btn">update</a>
-            <input type="submit" value="delete_playlist" class="delete-btn" onclick="return confirm('delete this playlist?');" name="delete">
+            <input type="hidden" name="course_id" value="<?= $course_id; ?>">
+            <a href="update_course.php?get_id=<?= $course_id; ?>" class="option-btn">update</a>
+            <input type="submit" value="delete_course" class="delete-btn" onclick="return confirm('Delete this course?');" name="delete">
          </form>
-         <a href="view_playlist.php?get_id=<?= $playlist_id; ?>" class="btn">view Category</a>
+         <a href="view_course.php?get_id=<?= $course_id; ?>" class="btn">view course</a>
       </div>
       <?php
          } 
       }else{
-         echo '<p class="empty">no playlists found!</p>';
+         echo '<p class="empty">no courses found!</p>';
       }}else{
          echo '<p class="empty">please search something!</p>';
       }
       ?>
 
    </div>
-
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php include '../components/footer.php'; ?>
-
 <script src="../js/admin_script.js"></script>
 
 <script>
-   document.querySelectorAll('.playlists .box-container .box .description').forEach(content => {
+   document.querySelectorAll('.courses .box-container .box .description').forEach(content => {
       if(content.innerHTML.length > 100) content.innerHTML = content.innerHTML.slice(0, 100);
    });
 </script>

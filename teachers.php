@@ -6,6 +6,8 @@ if(isset($_COOKIE['user_id'])){
    $user_id = $_COOKIE['user_id'];
 }else{
    $user_id = '';
+   header('Location: login.php');
+   exit();
 }
 
 ?>
@@ -13,10 +15,17 @@ if(isset($_COOKIE['user_id'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- meta properties -->
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>teachers</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Teachers - ExamGIS</title>
+
+   <!-- Fav-icon -->
+   <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+   <link rel="manifest" href="./images/site.webmanifest">
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -56,13 +65,13 @@ if(isset($_COOKIE['user_id'])){
 
                $tutor_id = $fetch_tutor['id'];
 
-               $count_playlists = $conn->prepare("SELECT * FROM `playlist` WHERE tutor_id = ?");
-               $count_playlists->execute([$tutor_id]);
-               $total_playlists = $count_playlists->rowCount();
+               $count_courses = $conn->prepare("SELECT * FROM `course` WHERE tutor_id = ?");
+               $count_courses->execute([$tutor_id]);
+               $total_courses = $count_courses->rowCount();
 
-               $count_contents = $conn->prepare("SELECT * FROM `content` WHERE tutor_id = ?");
-               $count_contents->execute([$tutor_id]);
-               $total_contents = $count_contents->rowCount();
+               $count_papers = $conn->prepare("SELECT * FROM `paper` WHERE tutor_id = ?");
+               $count_papers->execute([$tutor_id]);
+               $total_papers = $count_papers->rowCount();
 
                $count_likes = $conn->prepare("SELECT * FROM `likes` WHERE tutor_id = ?");
                $count_likes->execute([$tutor_id]);
@@ -74,14 +83,14 @@ if(isset($_COOKIE['user_id'])){
       ?>
       <div class="box">
          <div class="tutor">
-            <img src="uploaded_files/<?= $fetch_tutor['image']; ?>" alt="">
+            <img src="uploaded_files/tutor_thumb/<?= $fetch_tutor['image']; ?>" alt="">
             <div>
                <h3><?= $fetch_tutor['name']; ?></h3>
                <span><?= $fetch_tutor['profession']; ?></span>
             </div>
          </div>
-         <p>playlists : <span><?= $total_playlists; ?></span></p>
-         <p>total videos : <span><?= $total_contents ?></span></p>
+         <p>total courses : <span><?= $total_courses; ?></span></p>
+         <p>total uploads : <span><?= $total_papers ?></span></p>
          <p>total likes : <span><?= $total_likes ?></span></p>
          <p>total comments : <span><?= $total_comments ?></span></p>
          <form action="tutor_profile.php" method="post">
@@ -103,38 +112,8 @@ if(isset($_COOKIE['user_id'])){
 <!-- teachers section ends -->
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<?php include 'components/footer.php'; ?>    
-
 <!-- custom js file link  -->
 <script src="js/script.js"></script>
-   
+    
 </body>
 </html>

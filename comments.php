@@ -6,7 +6,8 @@ if(isset($_COOKIE['user_id'])){
    $user_id = $_COOKIE['user_id'];
 }else{
    $user_id = '';
-   header('location:home.php');
+   header('Location: login.php');
+   exit();
 }
 
 if(isset($_POST['delete_comment'])){
@@ -20,9 +21,9 @@ if(isset($_POST['delete_comment'])){
    if($verify_comment->rowCount() > 0){
       $delete_comment = $conn->prepare("DELETE FROM `comments` WHERE id = ?");
       $delete_comment->execute([$delete_id]);
-      $message[] = 'comment deleted successfully!';
+      $message[] = 'Comment is deleted successfully!';
    }else{
-      $message[] = 'comment already deleted!';
+      $message[] = 'Comment is already deleted!';
    }
 
 }
@@ -38,11 +39,11 @@ if(isset($_POST['update_now'])){
    $verify_comment->execute([$update_id, $update_box]);
 
    if($verify_comment->rowCount() > 0){
-      $message[] = 'comment already added!';
+      $message[] = 'Comment is already added!';
    }else{
       $update_comment = $conn->prepare("UPDATE `comments` SET comment = ? WHERE id = ?");
       $update_comment->execute([$update_box, $update_id]);
-      $message[] = 'comment edited successfully!';
+      $message[] = 'Comment is edited successfully!';
    }
 
 }
@@ -52,10 +53,17 @@ if(isset($_POST['update_now'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- meta properties -->
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>user comments</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>User Comments - ExamGIS</title>
+
+   <!-- Fav-icon -->
+   <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+   <link rel="manifest" href="./images/site.webmanifest">
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -90,7 +98,7 @@ if(isset($_POST['update_now'])){
 </section>
 <?php
    }else{
-      $message[] = 'comment was not found!';
+      $message[] = 'Comment was not found!';
    }
 }
 ?>
@@ -106,12 +114,12 @@ if(isset($_POST['update_now'])){
          $select_comments->execute([$user_id]);
          if($select_comments->rowCount() > 0){
             while($fetch_comment = $select_comments->fetch(PDO::FETCH_ASSOC)){
-               $select_content = $conn->prepare("SELECT * FROM `content` WHERE id = ?");
-               $select_content->execute([$fetch_comment['content_id']]);
-               $fetch_content = $select_content->fetch(PDO::FETCH_ASSOC);
+               $select_paper = $conn->prepare("SELECT * FROM `paper` WHERE id = ?");
+               $select_paper->execute([$fetch_comment['paper_id']]);
+               $fetch_paper = $select_paper->fetch(PDO::FETCH_ASSOC);
       ?>
       <div class="box" style="<?php if($fetch_comment['user_id'] == $user_id){echo 'order:-1;';} ?>">
-         <div class="content"><span><?= $fetch_comment['date']; ?></span><p> - <?= $fetch_content['title']; ?> - </p><a href="watch_video.php?get_id=<?= $fetch_content['id']; ?>">view content</a></div>
+         <div class="content"><span><?= $fetch_comment['date']; ?></span><p> - <?= $fetch_paper['title']; ?> - </p><a href="view_pdf.php?get_id=<?= $fetch_paper['id']; ?>">view paper</a></div>
          <p class="text"><?= $fetch_comment['comment']; ?></p>
          <?php
             if($fetch_comment['user_id'] == $user_id){ 
@@ -146,7 +154,7 @@ if(isset($_POST['update_now'])){
 
 
 
-<?php include 'components/footer.php'; ?>
+
 
 <!-- custom js file link  -->
 <script src="js/script.js"></script>

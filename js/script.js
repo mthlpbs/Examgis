@@ -1,11 +1,18 @@
 let body = document.body;
 
 let profile = document.querySelector('.header .flex .profile');
-
+ 
 document.querySelector('#user-btn').onclick = () =>{
    profile.classList.toggle('active');
    searchForm.classList.remove('active');
 }
+
+document.addEventListener('click', function(e) {
+   if (!profile.contains(e.target) && !document.querySelector('#user-btn').contains(e.target)) {
+       profile.classList.remove('active');
+   }
+});
+
 
 let searchForm = document.querySelector('.header .flex .search-form');
 
@@ -70,3 +77,26 @@ toggleBtn.onclick = (e) =>{
       disableDarkMode();
    }
 }
+
+function displayImage() {
+   const imageInput = document.getElementById('imageInput');
+   const label = document.getElementById('fileLabel');
+   const imgPreview = document.getElementById('imagePreview');
+
+   if (imageInput.files && imageInput.files[0]) {
+       const reader = new FileReader();
+
+       reader.onload = function(e) {
+           imgPreview.src = e.target.result;
+           imgPreview.style.display = 'block';
+           label.style.display = 'none';
+       };
+
+       reader.readAsDataURL(imageInput.files[0]);
+   } else {
+       label.textContent = 'Choose an image';
+       label.style.display = 'block';
+       imgPreview.style.display = 'none';
+   }
+}
+

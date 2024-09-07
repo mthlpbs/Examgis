@@ -6,6 +6,8 @@ if(isset($_COOKIE['user_id'])){
    $user_id = $_COOKIE['user_id'];
 }else{
    $user_id = '';
+   header('Location: login.php');
+   exit();
 }
 
 if(isset($_POST['submit'])){
@@ -37,10 +39,17 @@ if(isset($_POST['submit'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- meta properties -->
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>contact</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Contact Us - ExamGIS</title>
+
+   <!-- Fav-icon -->
+   <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+   <link rel="manifest" href="./images/site.webmanifest">
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -60,15 +69,15 @@ if(isset($_POST['submit'])){
    <div class="row">
 
       <div class="image">
-         <img src="images/contact-img.svg" alt="">
+         <img src="images/contact-us.png" alt="">
       </div>
 
       <form action="" method="post">
-         <h3>get in touch</h3>
-         <input type="text" placeholder="enter your name" required maxlength="100" name="name" class="box">
-         <input type="email" placeholder="enter your email" required maxlength="100" name="email" class="box">
-         <input type="number" min="0" max="9999999999" placeholder="enter your number" required maxlength="10" name="number" class="box">
-         <textarea name="msg" class="box" placeholder="enter your message" required cols="30" rows="10" maxlength="1000"></textarea>
+         <h3>Get in touch with us</h3>
+         <input type="text" placeholder="Enter your name" required maxlength="100" name="name" class="box">
+         <input type="email" placeholder="Enter your email" required maxlength="100" name="email" class="box">
+         <input type="number" min="0" max="0712345678" placeholder="enter your number" required maxlength="10" name="number" class="box">
+         <textarea name="msg" class="box" placeholder="Enter your message" required cols="30" rows="10" maxlength="1000"></textarea>
          <input type="submit" value="send message" class="inline-btn" name="submit">
       </form>
 
@@ -78,19 +87,19 @@ if(isset($_POST['submit'])){
 
       <div class="box">
          <i class="fas fa-phone"></i>
-         <h3>phone number</h3>
+         <h3>Call</h3>
          <a href="tel:0117430000">011 743 0000</a>
       </div>
 
       <div class="box">
          <i class="fas fa-envelope"></i>
-         <h3>email address</h3>
+         <h3>Mail</h3>
          <a href="mailto:Support@Examgis.com">Support@Examgis.com</a>
       </div>
 
       <div class="box">
          <i class="fas fa-map-marker-alt"></i>
-         <h3>office address</h3>
+         <h3>Address</h3>
          <a href="#">Saegis Campus, 135 S. De S. Jayasinghe Mawatha, Nugegoda</a>
       </div>
 
@@ -100,18 +109,7 @@ if(isset($_POST['submit'])){
 </section>
 
 <!-- contact section ends -->
-
-
-
-
-
-
-
-
-
-
-
-<?php include 'components/footer.php'; ?>  
+   
 
 <!-- custom js file link  -->
 <script src="js/script.js"></script>

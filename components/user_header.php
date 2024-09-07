@@ -15,10 +15,10 @@ if(isset($message)){
 
    <section class="flex">
 
-      <a href="home.php" class="logo">Examgis</a>
+      <a href="index.php" class="logo">ExamGIS</a>
 
       <form action="search_course.php" method="post" class="search-form">
-         <input type="text" name="search_course" placeholder="search courses..." required maxlength="100">
+         <input type="text" name="search_course" placeholder="search courses" required maxlength="100">
          <button type="submit" class="fas fa-search" name="search_course_btn"></button>
       </form>
 
@@ -36,15 +36,15 @@ if(isset($message)){
             if($select_profile->rowCount() > 0){
             $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
          ?>
-         <img src="uploaded_files/<?= $fetch_profile['image']; ?>" alt="">
+         <img src="uploaded_files/user_thumb/<?= $fetch_profile['image']; ?>" alt="">
          <h3><?= $fetch_profile['name']; ?></h3>
          <span>student</span>
-         <a href="profile.php" class="btn">view profile</a>
-         <a href="components/user_logout.php" onclick="return confirm('logout from this website?');" class="delete-btn">logout</a>
+         <a href="profile.php" class="btn">user profile</a>
+         <a href="components/user_logout.php" onclick="return confirm('Do you want to logout?');" class="delete-btn">logout</a>
          <?php
             }else{
          ?>
-         <h3>please login or register</h3>
+         <h3>Please login or register</h3>
           <div class="flex-btn">
             <a href="login.php" class="option-btn">login</a>
             <a href="register.php" class="option-btn">register</a>
@@ -75,7 +75,7 @@ if(isset($message)){
             if($select_profile->rowCount() > 0){
             $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
          ?>
-         <img src="uploaded_files/<?= $fetch_profile['image']; ?>" alt="">
+         <img src="uploaded_files/user_thumb/<?= $fetch_profile['image']; ?>" alt="">
          <h3><?= $fetch_profile['name']; ?></h3>
          <span>student</span>
          <a href="profile.php" class="btn">view profile</a>
@@ -93,10 +93,10 @@ if(isset($message)){
       </div>
 
    <nav class="navbar">
-      <a href="home.php"><i class="fas fa-home"></i><span>Home</span></a>
-      <a href="about.php"><i class="fas fa-question"></i><span>about us</span></a>
-      <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>Papers</span></a>
-      <a href="contact.php"><i class="fas fa-headset"></i><span>contact us</span></a>
+      <a href="index.php"><i class="fas fa-home"></i><span>&nbsp;Home</span></a>
+      <a href="courses.php"><i class="fas fa-graduation-cap"></i><span>&nbsp;Papers</span></a>
+      <a href="contact.php"><i class="fas fa-headset"></i><span>&nbsp;&nbsp;Contact us</span></a>
+      <a href="about.php"><i class="fas fa-question"></i><span>&nbsp;&nbsp;&nbsp;About Us</span></a>
    </nav>
 
 </div>

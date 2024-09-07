@@ -6,6 +6,8 @@ if(isset($_COOKIE['user_id'])){
    $user_id = $_COOKIE['user_id'];
 }else{
    $user_id = '';
+   header('Location: login.php');
+   exit();
 }
 
 ?>
@@ -13,10 +15,17 @@ if(isset($_COOKIE['user_id'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- meta properties -->
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>about</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>About us - ExamGIS</title>
+
+   <!-- Fav-icon -->
+   <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+   <link rel="manifest" href="./images/site.webmanifest">
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -25,6 +34,7 @@ if(isset($_COOKIE['user_id'])){
    <link rel="stylesheet" href="css/style.css">
 
 </head>
+
 <body>
 
 <?php include 'components/user_header.php'; ?>
@@ -40,9 +50,9 @@ if(isset($_COOKIE['user_id'])){
       </div>
 
       <div class="content">
-         <h3>why choose us?</h3>
+         <h3>We are MTC.</h3>
          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque nobis distinctio, nisi consequatur ad sequi, rem odit fugiat assumenda eligendi iure aut sunt ratione, tempore porro expedita quisquam.</p>
-         <a href="courses.html" class="inline-btn">our papers</a>
+         <a href="#" class="inline-btn">Contact us</a>
       </div>
 
    </div>
@@ -53,7 +63,7 @@ if(isset($_COOKIE['user_id'])){
          <i class="fas fa-graduation-cap"></i>
          <div>
             <h3>+1k</h3>
-            <span>papers</span>
+            <span>Institution & Universities</span>
          </div>
       </div>
 
@@ -61,7 +71,7 @@ if(isset($_COOKIE['user_id'])){
          <i class="fas fa-user-graduate"></i>
          <div>
             <h3>+25k</h3>
-            <span>brilliants students</span>
+            <span>Companies</span>
          </div>
       </div>
 
@@ -69,7 +79,7 @@ if(isset($_COOKIE['user_id'])){
          <i class="fas fa-chalkboard-user"></i>
          <div>
             <h3>+100</h3>
-            <span>expert teachers</span>
+            <span>Experts</span>
          </div>
       </div>
 
@@ -77,7 +87,7 @@ if(isset($_COOKIE['user_id'])){
          <i class="fas fa-briefcase"></i>
          <div>
             <h3>100%</h3>
-            <span>job placement</span>
+            <span>Accuracy</span>
          </div>
       </div>
 
@@ -205,14 +215,6 @@ if(isset($_COOKIE['user_id'])){
 
 
 
-
-
-
-
-
-
-
-<?php include 'components/footer.php'; ?>
 
 <!-- custom js file link  -->
 <script src="js/script.js"></script>

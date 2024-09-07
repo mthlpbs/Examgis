@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap');
 
 :root{
-   --main-color:#8e44ad;
+   --main-color:#565656;
    --red:#e74c3c;
-   --oragen:#f39c12;
+   --oragen:#030303;
    --white:#fff;
-   --black:#2c3e50;
+   --black:#030303;
    --light-color:#888;
    --light-bg:#eee;
    --border:.1rem solid rgba(0,0,0,.2);
@@ -541,7 +541,7 @@ section{
    padding: .5rem 0;
 }
 
-.playlist-form form{
+.course-form form{
    background-color: var(--white);
    border-radius: .5rem;
    padding: 2rem;
@@ -550,17 +550,17 @@ section{
    margin: 0 auto;
 }
 
-.playlist-form form p{
+.course-form form p{
    font-size: 1.7rem;
    color: var(--light-color);
    padding-top: 1rem;
 }
 
-.playlist-form form p span{
+.course-form form p span{
    color: var(--red);
 }
 
-.playlist-form form .box{
+.course-form form .box{
    margin: 1rem 0;
    border-radius: .5rem;
    padding: 1.4rem;
@@ -570,25 +570,25 @@ section{
    width: 100%;
 }
 
-.playlist-form form textarea{
+.course-form form textarea{
    height: 20rem;
    resize: none;
 }
 
-.playlist-form form .thumb{
+.course-form form .thumb{
    height: 22rem;
    margin-top: 1rem;
    position: relative;
 }
 
-.playlist-form form .thumb img{
+.course-form form .thumb img{
    height: 100%;
    width: 100%;
    object-fit: cover;
    border-radius: .5rem;
 }
 
-.playlist-form form .thumb span{
+.course-form form .thumb span{
    background-color: rgba(0,0,0,.3);
    color: #fff;
    border-radius: .5rem;
@@ -598,7 +598,7 @@ section{
    font-size: 2rem;
 }
 
-.playlists .box-container{
+.courses .box-container{
    display: grid;
    grid-template-columns: repeat(auto-fit, 35rem);
    align-items: flex-start;
@@ -606,45 +606,45 @@ section{
    gap: 1.5rem;
 }
 
-.playlists .box-container .box{
+.courses .box-container .box{
    background-color: var(--white);
    border-radius: .5rem;
    padding: 2rem;
    overflow-x:hidden;
 }
 
-.playlists .box-container .box .thumb{
+.courses .box-container .box .thumb{
    height: 20rem;
    position: relative;
    margin: 1.5rem 0;
 }
 
-.playlists .box-container .box .flex{
+.courses .box-container .box .flex{
    display: flex;
    align-items: center;
    gap: 1.5rem;
    justify-content: space-between;
 }
 
-.playlists .box-container .box .flex i{
+.courses .box-container .box .flex i{
    font-size: 1.5rem;
    color: var(--main-color);
    margin-right:.7rem;
 }
 
-.playlists .box-container .box .flex span{
+.courses .box-container .box .flex span{
    color: var(--light-color);
    font-size: 1.7rem;
 }
 
-.playlists .box-container .box .thumb img{
+.courses .box-container .box .thumb img{
    height: 100%;
    width: 100%;
    object-fit: cover;
    border-radius: .5rem;
 }
 
-.playlists .box-container .box .thumb span{
+.courses .box-container .box .thumb span{
    background-color: rgba(0,0,0,.3);
    color: #fff;
    border-radius: .5rem;
@@ -654,7 +654,7 @@ section{
    font-size: 2rem;
 }
 
-.playlists .box-container .box .title{
+.courses .box-container .box .title{
    font-size: 2rem;
    color: var(--black);
    margin-bottom: 1rem;
@@ -663,17 +663,17 @@ section{
    overflow-x:hidden;
 }
 
-.playlists .box-container .box .description{
+.courses .box-container .box .description{
    line-height: 2;
    font-size: 1.7rem;
    color: var(--light-color);
 }
 
-.playlists .box-container .box .description::after{
+.courses .box-container .box .description::after{
    content: '...';
 }
 
-.video-form form{
+.pdf-form form{
    max-width: 50rem;
    margin: 0 auto;
    background-color: var(--white);
@@ -682,17 +682,17 @@ section{
    padding-top: 1rem;
 }
 
-.video-form form p{
+.pdf-form form p{
    padding-top: 1rem;
    font-size: 1.7rem;
    color: var(--light-color);
 }
 
-.video-form form p span{
+.pdf-form form p span{
    color:var(--red);
 }
 
-.video-form form .box{
+.pdf-form form .box{
    width: 100%;
    border-radius: .5rem;
    background-color: var(--light-bg);
@@ -702,12 +702,12 @@ section{
    margin: 1rem 0;
 }
 
-.video-form form textarea{
+.pdf-form form textarea{
    height: 20rem;
    resize: none;
 }
 
-.video-form form img{
+.pdf-form form img{
    width: 100%;
    height: 20rem;
    border-radius: .5rem;
@@ -715,7 +715,7 @@ section{
    margin: .5rem 0;
 }
 
-.video-form form video{
+.pdf-form form pdf{
    background-color: #000;
    width: 100%;
    height: 20rem;
@@ -723,7 +723,7 @@ section{
    margin: .5rem 0;
 }
 
-.playlist-details .row{
+.course-details .row{
    display: flex;
    gap: 2.5rem;
    flex-wrap: wrap;
@@ -733,20 +733,20 @@ section{
    padding: 2rem;
 }
 
-.playlist-details .row .thumb{
+.course-details .row .thumb{
    flex: 1 1 40rem;
    height: 30rem;
    position: relative;
 }
 
-.playlist-details .row .thumb img{
+.course-details .row .thumb img{
    height: 100%;
    width: 100%;
    border-radius: .5rem;
    object-fit: cover;
 }
 
-.playlist-details .row .thumb span{
+.course-details .row .thumb span{
    background-color: rgba(0,0,0,.3);
    color: #fff;
    border-radius: .5rem;
@@ -756,31 +756,31 @@ section{
    font-size: 2rem;
 }
 
-.playlist-details .row .details{
+.course-details .row .details{
    flex: 1 1 40rem;
 }
 
-.playlist-details .row .details .date{
+.course-details .row .details .date{
    font-size: 1.5rem;
    margin: 1rem 0;
 }
 
-.playlist-details .row .details .date i{
+.course-details .row .details .date i{
    color: var(--main-color);
    margin-right: 1rem;
 }
 
-.playlist-details .row .details .date span{
+.course-details .row .details .date span{
    color: var(--light-color);
 }
 
-.playlist-details .row .details .title{
+.course-details .row .details .title{
    font-size: 2rem;
    color: var(--black);
    padding-bottom: .5rem;
 }
 
-.playlist-details .row .details .description{
+.course-details .row .details .description{
    padding: .5rem 0;
    font-size: 1.7rem;
    color: var(--light-color);
@@ -844,7 +844,7 @@ section{
    padding: 2rem;
 }
 
-.view-content .container .video{
+.view-content .container .pdf{
    width: 100%;
    object-fit: contain;
    margin-bottom: 1rem;
@@ -1000,7 +1000,7 @@ section{
 
 
 .footer{
-   position: sticky;
+   position: fixed;
    bottom: 0; right: 0; left: 0;
    background-color: var(--white);
    border-top: var(--border);
@@ -1074,7 +1074,7 @@ section{
       flex-flow: column;
    }
 
-   .view-content .container .video{
+   .view-content .container .pdf{
       height: 30rem;
    }
 
@@ -1095,11 +1095,11 @@ section{
       gap: 0;
    }
 
-   .playlists .box-container{
+   .courses .box-container{
       grid-template-columns: 1fr;
    }
 
-   .view-content .container .video{
+   .view-content .container .pdf{
       height: auto;
    }
 

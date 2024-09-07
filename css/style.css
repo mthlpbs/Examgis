@@ -1,14 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600&display=swap');
 
+html {
+   scroll-behavior: smooth;
+ }
+ 
 :root{
-   --main-color:#8e44ad;
+   --main-color:#565656;
    --red:#e74c3c;
-   --oragen:#f39c12;
+   --oragen:#030303;
    --white:#fff;
-   --black:#2c3e50;
+   --black:#030303;
    --light-color:#888;
    --light-bg:#eee;
+   --dark-hd:#0000006b;
    --border:.1rem solid rgba(0,0,0,.2);
+   --transparency-white: rgba(204, 203, 203, 0.603);
+   --transparency-nav-white:rgb(255 255 255 / 54%);
 }
 
 *{
@@ -26,15 +33,17 @@
 
 *::-webkit-scrollbar{
    height: .5rem;
-   width: 1rem;
+   width: 12px;
 }
 
 *::-webkit-scrollbar-track{
    background-color: transparent;
+   border-radius: 20px; 
 }
 
 *::-webkit-scrollbar-thumb{
    background-color: var(--main-color);
+   border-radius: 20px;
 }
 
 html{
@@ -45,6 +54,7 @@ html{
 body{
    background-color: var(--light-bg);
    padding-left: 30rem;
+   transition: all 0.3s ease-out;
 }
 
 body.dark{
@@ -53,10 +63,13 @@ body.dark{
    --light-color:#aaa;
    --light-bg:#333;
    --border:.1rem solid rgba(255,255,255,.2);
+   --transparency-white:rgba(0, 0, 0, 0.5);
+   --transparency-nav-white:rgba(14, 14, 14, 0.726);
 }
 
 body.active{
    padding-left: 0;
+   transition: all 0.3s ease-in;
 }
 
 section{
@@ -68,10 +81,10 @@ section{
 .btn,
 .option-btn,
 .delete-btn,
-.inline-btn,
 .inline-option-btn,
+.inline-btn,
 .inline-delete-btn{
-   border-radius: 30px;
+   border-radius: 45px;
    padding: 1rem 3rem;
    font-size: 1.8rem;
    color: #fff;
@@ -117,6 +130,7 @@ section{
 .inline-delete-btn:hover{
    background-color: var(--black);
    color: var(--white);
+   transition: all 0.3s ease-in;
 }
 
 .flex-btn{
@@ -134,6 +148,7 @@ section{
    align-items: center;
    gap:1rem;
    justify-content: space-between;
+   transition: all 0.6s linear(-0.09 38.24%, 1.26 37.5%);
 }
 
 .message.form{
@@ -153,7 +168,7 @@ section{
    font-size: 2.5rem;
    color:var(--red);
    cursor: pointer;
-   transition: .2s linear;
+   transition: all 0.6s linear(-0.09 38.24%, 1.26 37.5%);
 }
 
 .message i:hover{
@@ -162,7 +177,7 @@ section{
 
 .empty{
    background-color: var(--white);
-   border-radius: .5rem;
+   border-radius: 17px;
    padding: 1.5rem;
    text-align: center;
    width: 100%;
@@ -177,6 +192,7 @@ section{
    color: var(--black);
    text-transform: capitalize;
    margin-bottom: 3rem;
+   transition: all 0.3s ease-in;
 }
 
 .header{
@@ -193,6 +209,7 @@ section{
    display: flex;
    align-items: center;
    justify-content: space-between;
+   transition: all 0.3s ease-in;
 }
 
 .header .flex .logo{
@@ -203,7 +220,7 @@ section{
 
 .header .flex .search-form{
    width: 50rem;
-   border-radius: .5rem;
+   border-radius: 40px;
    display: flex;
    align-items: center;
    gap: 2rem;
@@ -223,6 +240,7 @@ section{
    color: var(--black);
    cursor: pointer;
    background: none;
+   transition: all 0.3s ease-in;
 }
 
 .header .flex .search-form button:hover{
@@ -232,7 +250,7 @@ section{
 .header .flex .icons div{
    font-size: 2rem;
    color: var(--black);
-   border-radius: .5rem;
+   border-radius: 15px;
    height: 4.5rem;
    cursor: pointer;
    width: 4.5rem;
@@ -254,18 +272,25 @@ section{
 .header .flex .profile{
    position: absolute;
    top: 120%; right: 2rem;
-   background-color: var(--white);
-   border-radius: .5rem;
+   background-color: var(--transparency-white);
+   backdrop-filter: blur(20px);
+   -webkit-backdrop-filter: blur(20px);
+   border-radius: 30px;
    padding: 2rem;
    text-align: center;
    width: 30rem;
    transform: scale(0);
    transform-origin: top right;
+   transition: transform 0.3s ease, opacity 0.3s ease;
+   opacity: 0;
+   pointer-events: none; 
 }
 
 .header .flex .profile.active{
    transform: scale(1);
-   transition: .2s linear;
+   opacity: 1;
+   pointer-events: auto; 
+   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .header .flex .profile img{
@@ -291,9 +316,13 @@ section{
    top: 0; left: 0;
    height: 100vh;
    width: 30rem;
-   background-color: var(--white);
+   background-color: var(--transparency-nav-white);
+   backdrop-filter: blur(20px);
+   -webkit-backdrop-filter: blur(20px);
    border-right: var(--border);
+   border-radius: 10px;
    z-index: 1200;
+   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .side-bar .close-side-bar{
@@ -312,11 +341,12 @@ section{
    cursor: pointer;
    background-color: var(--red);
    text-align: center;
-   border-radius: .5rem;
+   border-radius: 15px;
 }
 
 .side-bar .close-side-bar i:hover{
    background-color: var(--black);
+   transition: all 0.3s ease-in;
 }
 
 .side-bar .profile{
@@ -352,7 +382,6 @@ section{
 .side-bar .navbar a i{
    color: var(--main-color);
    margin-right: 1.5rem;
-   transition: .2s linear;
 }
 
 .side-bar .navbar a span{
@@ -369,8 +398,9 @@ section{
 
 .side-bar.active{
    left: -31rem;
-}
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
+}
 .quick-select .box-container{
    display: grid;
    grid-template-columns: repeat(auto-fit, minmax(27.5rem, 1fr));
@@ -380,7 +410,7 @@ section{
 }
 
 .quick-select .box-container .box{
-   border-radius: .5rem;
+   border-radius: 20px;
    background-color: var(--white);
    padding: 2rem;
 }
@@ -418,7 +448,7 @@ section{
 
 .quick-select .box-container .box .flex a{
    padding: 1rem 1.5rem;
-   border-radius: .5rem;
+   border-radius: 15px;
    font-size: 1.6rem;
    background-color: var(--light-bg);
 }
@@ -453,7 +483,7 @@ section{
 }
 
 .courses .box-container .box{
-   border-radius: .5rem;
+   border-radius: 20px;
    background-color: var(--white);
    padding: 2rem;
 }
@@ -486,10 +516,11 @@ section{
 
 .courses .box-container .box .thumb{
    width: 100%;
-   border-radius: .5rem;
+   border-radius: 15px;
    height: 20rem;
    object-fit: cover;
    margin-bottom: .3rem;
+   border: 1px solid #c9c9c983;
 }
 
 .courses .box-container .box .title{
@@ -548,7 +579,7 @@ section{
    flex: 1 1 25rem;
    display: flex;
    background-color: var(--white);
-   border-radius: .5rem;
+   border-radius: 25px;
    padding: 2rem;
    align-items: center;
    gap: 2rem;
@@ -579,7 +610,7 @@ section{
 }
 
 .reviews .box-container .box{
-   border-radius: .5rem;
+   border-radius: 25px;
    padding: 2rem;
    background-color: var(--white);
    padding-top: 1.5rem;
@@ -623,6 +654,7 @@ section{
    flex-wrap: wrap;
    padding: 2rem;
    background-color: var(--white);
+   border-radius: 15px;
 }
 
 .playlist .row .col{
@@ -631,7 +663,7 @@ section{
 
 .playlist .row .col .save-list button{
    font-size: 2rem;
-   border-radius: .5rem;
+   border-radius: 20px;
    background-color: var(--light-bg);
    padding: 1.2rem 2.5rem;
    cursor: pointer;
@@ -667,7 +699,7 @@ section{
 .playlist .row .col .thumb span{
    position: absolute;
    top: 1rem; left: 1rem;
-   border-radius: .5rem;
+   border-radius: 25px;
    padding: .5rem 1.5rem;
    font-size: 2rem;
    color: #fff;
@@ -677,8 +709,9 @@ section{
 .playlist .row .col .thumb img{
    width: 100%;
    height: 100%;
-   border-radius: .5rem;
+   border-radius: 20px;
    object-fit: cover;
+   border: 1px solid #c9c9c983;
 }
 
 .playlist .row .col .tutor{
@@ -735,7 +768,7 @@ section{
    color: var(--light-color);
 }
 
-.videos-container .box-container{
+.pdf-container .box-container{
    display: grid;
    grid-template-columns: repeat(auto-fit, 35rem);
    gap: 1.5rem;
@@ -743,21 +776,22 @@ section{
    justify-content: center;
 }
 
-.videos-container .box-container .box{
+.pdf-container .box-container .box{
    position: relative;
-   border-radius: .5rem;
+   border-radius: 15px;
    padding: 2rem;
    background-color: var(--white);
 }
 
-.videos-container .box-container .box img{
+.pdf-container .box-container .box img{
    height: 20rem;
    width: 100%;
-   border-radius: .5rem;
+   border-radius: 20px;
+   border: 1px solid #c9c9c983;
    object-fit: cover;
 }
 
-.videos-container .box-container .box i{
+.pdf-container .box-container .box i{
    position: absolute;
    top: 2rem; left: 2rem; right: 2rem;
    height: 20rem;
@@ -771,129 +805,128 @@ section{
    display: none;
 }
 
-.videos-container .box-container .box:hover i{
+.pdf-container .box-container .box:hover i{
    display: flex;
 }
 
-.videos-container .box-container .box h3{
+.pdf-container .box-container .box h3{
    font-size: 2rem;
    color: var(--black);
    margin-top: 1rem;
 }
 
-.videos-container .box-container .box:hover h3{
+.pdf-container .box-container .box:hover h3{
    color: var(--main-color);
 }
 
-.watch-video .video-details{
+.view-pdf .pdf-details{
    background-color: var(--white);
    padding: 2rem;
-   border-radius: .5rem;
+   border-radius: 15px;
 }
 
-.watch-video .video-details .video{
+.view-pdf .pdf-details .pdf{
    width: 100%;
-   border-radius: .5rem;
-   background: #000;
+   border-radius: 20px;
    height: 50rem;
 }
 
-.watch-video .video-details .title{
+.view-pdf .pdf-details .title{
    font-size: 2rem;
    color: var(--black);
    padding: 1.5rem 0;
 }
 
-.watch-video .video-details .info{
+.view-pdf .pdf-details .info{
    display: flex;
    gap: 2rem;
    padding-bottom: 1.5rem;
    border-bottom: var(--border);
 }
 
-.watch-video .video-details .info p{
+.view-pdf .pdf-details .info p{
    font-size:1.6rem;
 }
 
-.watch-video .video-details .info p i{
+.view-pdf .pdf-details .info p i{
    margin-right: 1rem;
    color: var(--main-color);
 }
 
-.watch-video .video-details .info p span{
+.view-pdf .pdf-details .info p span{
    color: var(--light-color);
 }
 
-.watch-video .video-details .tutor{
+.view-pdf .pdf-details .tutor{
    padding: 2rem 0;
    display: flex;
    align-items: center;
    gap: 2rem;
 }
 
-.watch-video .video-details .tutor img{
+.view-pdf .pdf-details .tutor img{
    height: 7rem;
    width: 7rem;
    border-radius: 50%;
    object-fit: cover;
 }
 
-.watch-video .video-details .tutor h3{
+.view-pdf .pdf-details .tutor h3{
    font-size: 2rem;
    color: var(--black);
    margin-bottom: .2rem;
 }
 
-.watch-video .video-details .tutor span{
+.view-pdf .pdf-details .tutor span{
    color: var(--light-color);
    font-size: 1.5rem;
 }
 
-.watch-video .video-details .flex{
+.view-pdf .pdf-details .flex{
    display: flex;
    align-items: center;
    gap: 1.5rem;
    justify-content: space-between;
 }
 
-.watch-video .video-details .flex a{
+.view-pdf .pdf-details .flex a{
    margin-top: 0;
 }
 
-.watch-video .video-details .flex button{
+.view-pdf .pdf-details .flex button{
    background-color: var(--light-bg);
    cursor: pointer;
    padding: 1rem 2.5rem;
    font-size: 2rem;
-   border-radius: .5rem;
+   border-radius: 23px;
 }
 
-.watch-video .video-details .flex button i{
+.view-pdf .pdf-details .flex button i{
    color: var(--black);
    margin-right: 1rem;
 }
 
-.watch-video .video-details .flex button span{
+.view-pdf .pdf-details .flex button span{
    color: var(--light-color);
 }
 
-.watch-video .video-details .flex button:hover{
+.view-pdf .pdf-details .flex button:hover{
    background-color: var(--black);
 }
 
-.watch-video .video-details .flex button:hover i{
+.view-pdf .pdf-details .flex button:hover i{
    color: var(--white);
 }
 
-.watch-video .video-details .flex button:hover span{
+.view-pdf .pdf-details .flex button:hover span{
    color: var(--white);
 }
 
-.watch-video .video-details .description{
+.view-pdf .pdf-details .description{
    padding-top: 2rem;
 }
 
-.watch-video .video-details .description p{
+.view-pdf .pdf-details .description p{
    line-height: 1.5;
    font-size: 1.7rem;
    color: var(--light-color);
@@ -902,13 +935,13 @@ section{
 
 .comments .add-comment{
    background-color: var(--white);
-   border-radius: .5rem;
+   border-radius: 15px;
    margin-bottom: 3rem;
    padding: 2rem;
 }
 
 .comments .add-comment textarea{
-   border-radius: .5rem;
+   border-radius: 20px;
    padding: 1.4rem;
    width: 100%;
    height: 20rem;
@@ -920,7 +953,7 @@ section{
 
 .comments .show-comments{
    background-color: var(--white);
-   border-radius: .5rem;
+   border-radius: 15px;
    padding: 2rem;
    display: grid;
    gap: 2.5rem;
@@ -977,7 +1010,7 @@ section{
 }
 
 .comments .show-comments .text{
-   border-radius: .5rem;
+   border-radius: 20px;
    background-color: var(--light-bg);
    padding: 1rem 1.5rem;
    color: var(--black);
@@ -1182,7 +1215,7 @@ section{
 .contact .row form{
    flex:1 1 30rem;
    background-color: var(--white);
-   border-radius: .5rem;
+   border-radius: 20px;
    padding: 2rem;
    text-align: center;
 }
@@ -1196,7 +1229,7 @@ section{
 .contact .row form .box{
    width: 100%;
    margin: 1rem 0;
-   border-radius: .5rem;
+   border-radius: 15px;
    background-color: var(--light-bg);
    padding: 1.4rem;
    color: var(--black);
@@ -1218,7 +1251,7 @@ section{
 
 .contact .box-container .box{
    flex: 1 1 30rem;
-   border-radius: .5rem;
+   border-radius: 25px;
    background-color: var(--white);
    padding: 2rem;
    text-align: center;
@@ -1251,7 +1284,7 @@ section{
 
 .profile .details{
    background-color: var(--white);
-   border-radius: .5rem;
+   border-radius: 15px;
    padding: 2rem;
 }
 
@@ -1288,7 +1321,7 @@ section{
 
 .profile .details .box-container .box{
    background-color: var(--light-bg);
-   border-radius: .5rem;
+   border-radius: 20px;
    padding: 2rem;
    flex: 1 1 30rem;
 }
@@ -1303,7 +1336,7 @@ section{
 .profile .details .box-container .box .flex i{
    height: 4.5rem;
    width: 4.5rem;
-   border-radius: .5rem;
+   border-radius: 100px;
    background-color: var(--black);
    line-height: 4.4rem;
    font-size: 2rem;
@@ -1331,7 +1364,7 @@ section{
 
 .form-container form{
    background-color: var(--white);
-   border-radius: .5rem;
+   border-radius: 15px;
    padding: 2rem;
 }
 
@@ -1378,7 +1411,7 @@ section{
 
 .form-container form .box{
    width: 100%;
-   border-radius: .5rem;
+   border-radius: 20px;
    margin: 1rem 0;
    font-size: 1.8rem;
    color: var(--black);
@@ -1395,7 +1428,7 @@ section{
    flex: 1 1 25rem;
 }
 
-.liked-videos .box-container{
+.liked-pdfs .box-container{
    display: grid;
    grid-template-columns: repeat(auto-fit, 35rem);
    gap: 1.5rem;
@@ -1404,39 +1437,39 @@ section{
    text-overflow: hidden;
 }
 
-.liked-videos .box-container .box{
+.liked-pdfs .box-container .box{
    background-color: var(--white);
    border-radius: .5rem;
    padding: 2rem;
    overflow-x: hidden;
 }
 
-.liked-videos .box-container .box .tutor{
+.liked-pdfs .box-container .box .tutor{
    margin-bottom:2rem;
    display: flex;
    align-items: center;
    gap: 1.5rem;
 }
 
-.liked-videos .box-container .box .tutor img{
+.liked-pdfs .box-container .box .tutor img{
    height: 5rem;
    width: 5rem;
    border-radius: 50%;
    object-fit: cover;
 }
 
-.liked-videos .box-container .box .tutor h3{
+.liked-pdfs .box-container .box .tutor h3{
    font-size: 1.8rem;
    color: var(--black);
    margin-bottom: .2rem;
 }
 
-.liked-videos .box-container .box .tutor span{
+.liked-pdfs .box-container .box .tutor span{
    font-size: 1.5rem;
    color: var(--light-color);
 }
 
-.liked-videos .box-container .box .thumb{
+.liked-pdfs .box-container .box .thumb{
    width: 100%;
    height: 20rem;
    object-fit: cover;
@@ -1444,7 +1477,7 @@ section{
    margin-bottom: 1rem;
 }
 
-.liked-videos .box-container .box .title{
+.liked-pdfs .box-container .box .title{
    font-size: 2rem;
    color: var(--black);
    padding: .5rem 0;
@@ -1453,21 +1486,8 @@ section{
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 .footer{
-   position: sticky;
+   position: fixed;
    bottom: 0; right: 0; left: 0;
    background-color: var(--white);
    border-top: var(--border);
@@ -1493,8 +1513,7 @@ section{
    }
 
    .side-bar{
-      transition: .2s linear;
-      left: -30rem;
+      left: -31rem;
    }
 
    .side-bar.active{
@@ -1529,6 +1548,8 @@ section{
       border-top: var(--border);     
       border-bottom: var(--border);
       background-color: var(--white);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
       transition: .2s linear;
    }
@@ -1543,7 +1564,7 @@ section{
       flex-flow: column;
    }
 
-   .watch-video .video-details .video{
+   .view-pdf .pdf-details .pdf{
       height: 30rem;
    }
 
@@ -1580,7 +1601,7 @@ section{
       grid-template-columns: 1fr;
    }
 
-   .videos-container .box-container{
+   .pdf-container .box-container{
       grid-template-columns: 1fr;
    }
 
@@ -1588,7 +1609,7 @@ section{
       grid-template-columns: 1fr;
    }
 
-   .watch-video .video-details .video{
+   .view-pdf .pdf-details .pdf{
       height: auto;
    }
 

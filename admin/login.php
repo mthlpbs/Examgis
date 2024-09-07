@@ -2,6 +2,12 @@
 
 include '../components/connect.php';
 
+// Check if user is already logged in
+if(isset($_COOKIE['tutor_id'])){
+    header('Location: dashboard.php');
+    exit();
+}
+
 if(isset($_POST['submit'])){
 
    $email = $_POST['email'];
@@ -15,7 +21,8 @@ if(isset($_POST['submit'])){
    
    if($select_tutor->rowCount() > 0){
      setcookie('tutor_id', $row['id'], time() + 60*60*24*30, '/');
-     header('location:dashboard.php');
+     header('Location: dashboard.php');
+     exit(); // Ensure the script stops executing after redirection
    }else{
       $message[] = 'incorrect email or password!';
    }
@@ -27,10 +34,37 @@ if(isset($_POST['submit'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <!-- primary meta data-->
+   <meta http-equiv="Content-Type" charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Login</title>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="keywords" content="Login,Log in,Signin,Sign in" lang="en">
+   <meta name="title" content="ExamGIS: Your Ultimate Study Companion">
+   <meta name="description" content=" ExamGIS is a user-friendly platform that provides essential study materials for Saegis students. Whether you need resources, textbooks, or past papers, ExamGIS has you covered. It’s designed to support your academic journey and help you excel in your studies">
+   <meta name="language" content="English">
+   <meta name="author" content="TCM inc">
+   <meta name="owner" content="-">
+
+   <!-- meta properties -->
+   <title>Login - ExamGIS</title>
+   <meta name="title" content="ExamGIS: Your Ultimate Study Companion" />
+   <meta name="description" content="ExamGIS is a comprehensive platform designed to support students at Saegis Campus. Whether you’re looking for resources, textbooks, or past papers, ExamGIS has you covered. Our user-friendly interface provides easy access to essential study materials, helping you excel in your academic journey." />
+   <meta property="og:type" content="website" />
+   <meta property="og:url" content="https://examgis.rf.gd" />
+   <meta property="og:title" content="ExamGIS: Your Ultimate Study Companion" />
+   <meta property="og:description" content="ExamGIS is a comprehensive platform designed to support students at Saegis Campus. Whether you’re looking for resources, textbooks, or past papers, ExamGIS has you covered. Our user-friendly interface provides easy access to essential study materials, helping you excel in your academic journey." />
+   <meta property="og:image" content="https://i.imgur.com/WVc46oI.jpeg" />
+   <meta property="twitter:card" content="summary_large_image" />
+   <meta property="twitter:url" content="https://examgis.rf.gd" />
+   <meta property="twitter:title" content="ExamGIS: Your Ultimate Study Companion" />
+   <meta property="twitter:description" content="ExamGIS is a comprehensive platform designed to support students at Saegis Campus. Whether you’re looking for resources, textbooks, or past papers, ExamGIS has you covered. Our user-friendly interface provides easy access to essential study materials, helping you excel in your academic journey." />
+   <meta property="twitter:image" content="https://i.imgur.com/WVc46oI.jpeg" />
+
+   <!-- Fav-icon -->
+   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon/favicon-16x16.png">
+   <link rel="manifest" href="/site.webmanifest">
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -59,31 +93,18 @@ if(isset($message)){
 <section class="form-container">
 
    <form action="" method="post" enctype="multipart/form-data" class="login">
-      <h3>Welcome Back to Examgis!</h3>
-      <p>your email <span>*</span></p>
-      <input type="email" name="email" placeholder="enter your email" maxlength="20" required class="box">
-      <p>your password <span>*</span></p>
-      <input type="password" name="pass" placeholder="enter your password" maxlength="20" required class="box">
-      <p class="link">don't have an account? <a href="register.php">register new</a></p>
+      <h3>Welcome to Examgis!</h3>
+      <p>Your email <span>*</span></p>
+      <input type="email" name="email" placeholder="Enter your email" maxlength="20" required class="box">
+      <p>Your password <span>*</span></p>
+      <input type="password" name="pass" placeholder="Enter your password" maxlength="20" required class="box">
+      <p class="link">Don't have an account? <a href="register.php">Register new</a></p>
       <input type="submit" name="submit" value="login now" class="btn">
    </form>
 
 </section>
 
-<!-- registe section ends -->
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!-- register section ends -->
 
 <script>
 

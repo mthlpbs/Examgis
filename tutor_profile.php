@@ -6,6 +6,8 @@ if(isset($_COOKIE['user_id'])){
    $user_id = $_COOKIE['user_id'];
 }else{
    $user_id = '';
+   header('Location: login.php');
+   exit();
 }
 
 if(isset($_POST['tutor_fetch'])){
@@ -18,13 +20,13 @@ if(isset($_POST['tutor_fetch'])){
    $fetch_tutor = $select_tutor->fetch(PDO::FETCH_ASSOC);
    $tutor_id = $fetch_tutor['id'];
 
-   $count_playlists = $conn->prepare("SELECT * FROM `playlist` WHERE tutor_id = ?");
-   $count_playlists->execute([$tutor_id]);
-   $total_playlists = $count_playlists->rowCount();
+   $count_courses = $conn->prepare("SELECT * FROM `course` WHERE tutor_id = ?");
+   $count_courses->execute([$tutor_id]);
+   $total_courses = $count_courses->rowCount();
 
-   $count_contents = $conn->prepare("SELECT * FROM `content` WHERE tutor_id = ?");
-   $count_contents->execute([$tutor_id]);
-   $total_contents = $count_contents->rowCount();
+   $count_papers = $conn->prepare("SELECT * FROM `paper` WHERE tutor_id = ?");
+   $count_papers->execute([$tutor_id]);
+   $total_papers = $count_papers->rowCount();
 
    $count_likes = $conn->prepare("SELECT * FROM `likes` WHERE tutor_id = ?");
    $count_likes->execute([$tutor_id]);
@@ -44,10 +46,17 @@ if(isset($_POST['tutor_fetch'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- meta properties -->
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>tutor's profile</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Tutor's Profile - ExamGIS</title>
+
+   <!-- Fav-icon -->
+   <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+   <link rel="manifest" href="./images/site.webmanifest">
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -73,8 +82,8 @@ if(isset($_POST['tutor_fetch'])){
          <span><?= $fetch_tutor['profession']; ?></span>
       </div>
       <div class="flex">
-         <p>total playlists : <span><?= $total_playlists; ?></span></p>
-         <p>total videos : <span><?= $total_contents; ?></span></p>
+         <p>total courses : <span><?= $total_courses; ?></span></p>
+         <p>total uploads : <span><?= $total_papers; ?></span></p>
          <p>total likes : <span><?= $total_likes; ?></span></p>
          <p>total comments : <span><?= $total_comments; ?></span></p>
       </div>
@@ -85,13 +94,13 @@ if(isset($_POST['tutor_fetch'])){
 <!-- teachers profile section ends -->
 
 <section class="courses">
-
+ 
    <h1 class="heading">latest courese</h1>
 
    <div class="box-container">
 
       <?php
-         $select_courses = $conn->prepare("SELECT * FROM `playlist` WHERE tutor_id = ? AND status = ?");
+         $select_courses = $conn->prepare("SELECT * FROM `course` WHERE tutor_id = ? AND status = ?");
          $select_courses->execute([$tutor_id, 'active']);
          if($select_courses->rowCount() > 0){
             while($fetch_course = $select_courses->fetch(PDO::FETCH_ASSOC)){
@@ -103,7 +112,7 @@ if(isset($_POST['tutor_fetch'])){
       ?>
       <div class="box">
          <div class="tutor">
-            <img src="uploaded_files/<?= $fetch_tutor['image']; ?>" alt="">
+            <img src="uploaded_files/tutor_thumb/<?= $fetch_tutor['image']; ?>" alt="">
             <div>
                <h3><?= $fetch_tutor['name']; ?></h3>
                <span><?= $fetch_course['date']; ?></span>
@@ -111,12 +120,12 @@ if(isset($_POST['tutor_fetch'])){
          </div>
          <img src="uploaded_files/<?= $fetch_course['thumb']; ?>" class="thumb" alt="">
          <h3 class="title"><?= $fetch_course['title']; ?></h3>
-         <a href="playlist.php?get_id=<?= $course_id; ?>" class="inline-btn">view playlist</a>
+         <a href="course_desc.php?get_id=<?= $course_id; ?>" class="inline-btn">view course</a>
       </div>
       <?php
          }
       }else{
-         echo '<p class="empty">no courses added yet!</p>';
+         echo '<p class="empty">No courses are added yet!</p>';
       }
       ?>
 
@@ -135,7 +144,7 @@ if(isset($_POST['tutor_fetch'])){
 
 
 
-<?php include 'components/footer.php'; ?>    
+    
 
 <!-- custom js file link  -->
 <script src="js/script.js"></script>

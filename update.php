@@ -6,8 +6,9 @@ if(isset($_COOKIE['user_id'])){
    $user_id = $_COOKIE['user_id'];
 }else{
    $user_id = '';
-   header('location:login.php');
-}
+   header('Location: login.php');
+   exit();
+} 
 
 if(isset($_POST['submit'])){
 
@@ -24,7 +25,7 @@ if(isset($_POST['submit'])){
   if(!empty($name)){
    $update_name = $conn->prepare("UPDATE `users` SET name = ? WHERE id = ?");
    $update_name->execute([$name, $user_id]);
-   $message[] = 'username updated successfully!';
+   $message[] = 'Username is updated successfully!';
   }
 
    $email = $_POST['email'];
@@ -34,11 +35,11 @@ if(isset($_POST['submit'])){
       $select_email = $conn->prepare("SELECT email FROM `users` WHERE email = ?");
       $select_email->execute([$email]);
       if($select_email->rowCount() > 0){
-         $message[] = 'email already taken!';
+         $message[] = 'Email is already taken!';
       }else{
          $update_email = $conn->prepare("UPDATE `users` SET email = ? WHERE id = ?");
          $update_email->execute([$email, $user_id]);
-         $message[] = 'email updated successfully!';
+         $message[] = 'Email is updated successfully!';
       }
    }
 
@@ -48,7 +49,7 @@ if(isset($_POST['submit'])){
    $rename = unique_id().'.'.$ext;
    $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
-   $image_folder = 'uploaded_files/'.$rename;
+   $image_folder = 'uploaded_files/user_thumb/'.$rename;
 
    if(!empty($image)){
       if($image_size > 2000000){
@@ -58,9 +59,9 @@ if(isset($_POST['submit'])){
          $update_image->execute([$rename, $user_id]);
          move_uploaded_file($image_tmp_name, $image_folder);
          if($prev_image != '' AND $prev_image != $rename){
-            unlink('uploaded_files/'.$prev_image);
+            unlink('uploaded_files/user_thumb/'.$prev_image);
          }
-         $message[] = 'image updated successfully!';
+         $message[] = 'Image is updated successfully!';
       }
    }
 
@@ -95,10 +96,17 @@ if(isset($_POST['submit'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- meta properties -->
    <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>update profile</title>
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <title>Update Profile - ExamGIS</title>
+
+   <!-- Fav-icon -->
+   <link rel="apple-touch-icon" sizes="180x180" href="./images/favicon/apple-touch-icon.png">
+   <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon/favicon-32x32.png">
+   <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon/favicon-16x16.png">
+   <link rel="manifest" href="./images/site.webmanifest">
 
    <!-- font awesome cdn link  -->
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -114,22 +122,22 @@ if(isset($_POST['submit'])){
 <section class="form-container" style="min-height: calc(100vh - 19rem);">
 
    <form action="" method="post" enctype="multipart/form-data">
-      <h3>update profile</h3>
+      <h3>Update profile</h3>
       <div class="flex">
          <div class="col">
-            <p>your name</p>
+            <p>Your name</p>
             <input type="text" name="name" placeholder="<?= $fetch_profile['name']; ?>" maxlength="100" class="box">
-            <p>your email</p>
+            <p>Your email</p>
             <input type="email" name="email" placeholder="<?= $fetch_profile['email']; ?>" maxlength="100" class="box">
-            <p>update pic</p>
+            <p>Update your profile picture</p>
             <input type="file" name="image" accept="image/*" class="box">
          </div>
          <div class="col">
-               <p>old password</p>
+               <p>Old password</p>
                <input type="password" name="old_pass" placeholder="enter your old password" maxlength="50" class="box">
-               <p>new password</p>
+               <p>New password</p>
                <input type="password" name="new_pass" placeholder="enter your new password" maxlength="50" class="box">
-               <p>confirm password</p>
+               <p>Confirm password</p>
                <input type="password" name="cpass" placeholder="confirm your new password" maxlength="50" class="box">
          </div>
       </div>
@@ -140,19 +148,6 @@ if(isset($_POST['submit'])){
 
 <!-- update profile section ends -->
 
-
-
-
-
-
-
-
-
-
-
-
-
-<?php include 'components/footer.php'; ?>
 
 <!-- custom js file link  -->
 <script src="js/script.js"></script>
